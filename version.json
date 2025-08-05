@@ -1,0 +1,34 @@
+{
+    "name": "ComfyUI Llama.cpp Client Node",
+    "version": "1.0.0",
+    "description": "Comprehensive ComfyUI custom node for llama-server client with complete API support",
+    "author": "AI Assistant",
+    "license": "MIT",
+    "comfyui_version": ">=1.0.0",
+    "dependencies": [
+        "requests>=2.25.1",
+        "pillow>=8.0.0"
+    ],
+    "supported_endpoints": [
+        "completion",
+        "chat_completions", 
+        "embeddings",
+        "tokenize",
+        "detokenize",
+        "apply_template",
+        "infill",
+        "reranking"
+    ],
+    "features": [
+        "Advanced sampling (DRY, XTC, Mirostat, Dynamic Temperature)",
+        "Grammar and JSON Schema constraints",
+        "Multimodal image support",
+        "Function calling and tool use",
+        "LoRA adapter configuration",
+        "KV cache management",
+        "Streaming support",
+        "Complete parameter coverage"
+    ],
+    "node_count": 1,
+    "category": "AI/LlamaCpp"
+}
