@@ -527,6 +527,9 @@ class LlamaCppClientNode:
                         cleaned[key] = json.loads(value)
                     except json.JSONDecodeError:
                         continue
+                elif isinstance(value, (list, dict)):
+                    # Value is already a list or dict, use as is
+                    cleaned[key] = value
             else:
                 cleaned[key] = value
         

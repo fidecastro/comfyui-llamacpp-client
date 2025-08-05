@@ -31,11 +31,16 @@ def test_node():
             n_predict=20
         )
         
-        if error:
-            print(f"❌ Error: {error} (Status: {status_code})")
+        if error or status_code >= 400:
+            print(f"❌ Error: {error or 'HTTP Error'} (Status: {status_code})")
+            if raw_response:
+                print(f"Raw response: {raw_response[:200]}...")
         else:
             print(f"✅ Success! Status: {status_code}")
-            print(f"Response preview: {response[:100]}...")
+            if isinstance(response, dict):
+                print(f"Response preview: {str(response)[:100]}...")
+            else:
+                print(f"Response preview: {response[:100]}...")
             
     except Exception as e:
         print(f"❌ Exception: {str(e)}")
@@ -46,14 +51,17 @@ def test_node():
         response, raw_response, error, status_code = node.process_request(
             server_url=server_url,
             endpoint="chat_completions",
+            prompt="",  # Empty prompt as it's not used for chat_completions
             system_message="You are a helpful assistant.",
             user_message="What is 2+2?",
             temperature=0.3,
             max_tokens=50
         )
         
-        if error:
-            print(f"❌ Error: {error} (Status: {status_code})")
+        if error or status_code >= 400:
+            print(f"❌ Error: {error or 'HTTP Error'} (Status: {status_code})")
+            if raw_response:
+                print(f"Raw response: {raw_response[:200]}...")
         else:
             print(f"✅ Success! Status: {status_code}")
             try:
@@ -61,8 +69,13 @@ def test_node():
                 if 'choices' in parsed and len(parsed['choices']) > 0:
                     content = parsed['choices'][0].get('message', {}).get('content', 'No content')
                     print(f"Chat response: {content}")
+                else:
+                    print(f"No choices in response: {parsed}")
             except:
-                print(f"Response preview: {response[:100]}...")
+                if isinstance(response, dict):
+                    print(f"Response preview: {str(response)[:100]}...")
+                else:
+                    print(f"Response preview: {response[:100]}...")
                 
     except Exception as e:
         print(f"❌ Exception: {str(e)}")
@@ -73,12 +86,15 @@ def test_node():
         response, raw_response, error, status_code = node.process_request(
             server_url=server_url,
             endpoint="tokenize",
+            prompt="",  # Empty prompt as we use content parameter
             content="Hello world!",
             with_pieces=True
         )
         
-        if error:
-            print(f"❌ Error: {error} (Status: {status_code})")
+        if error or status_code >= 400:
+            print(f"❌ Error: {error or 'HTTP Error'} (Status: {status_code})")
+            if raw_response:
+                print(f"Raw response: {raw_response[:200]}...")
         else:
             print(f"✅ Success! Status: {status_code}")
             try:
@@ -86,7 +102,10 @@ def test_node():
                 if 'tokens' in parsed:
                     print(f"Tokens: {parsed['tokens'][:5]}...")  # First 5 tokens
             except:
-                print(f"Response preview: {response[:100]}...")
+                if isinstance(response, dict):
+                    print(f"Response preview: {str(response)[:100]}...")
+                else:
+                    print(f"Response preview: {response[:100]}...")
                 
     except Exception as e:
         print(f"❌ Exception: {str(e)}")
@@ -109,11 +128,16 @@ def test_node():
             n_predict=30
         )
         
-        if error:
-            print(f"❌ Error: {error} (Status: {status_code})")
+        if error or status_code >= 400:
+            print(f"❌ Error: {error or 'HTTP Error'} (Status: {status_code})")
+            if raw_response:
+                print(f"Raw response: {raw_response[:200]}...")
         else:
             print(f"✅ Success! Status: {status_code}")
-            print(f"Creative response: {response[:100]}...")
+            if isinstance(response, dict):
+                print(f"Creative response: {str(response)[:100]}...")
+            else:
+                print(f"Creative response: {response[:100]}...")
                 
     except Exception as e:
         print(f"❌ Exception: {str(e)}")
